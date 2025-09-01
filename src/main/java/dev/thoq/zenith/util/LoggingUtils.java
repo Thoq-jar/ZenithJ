@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 @SuppressWarnings({"unused", "StringBufferReplaceableByString", "SameParameterValue"})
-public record Logger(String className) {
+public record LoggingUtils(String className) {
     public static final String RESET = "\u001B[0m";
     public static final String BLACK = "\u001B[30m";
     public static final String RED = "\u001B[31m";
@@ -42,6 +42,7 @@ public record Logger(String className) {
         TRACE(BRIGHT_BLACK, "TRACE"),
         DEBUG(CYAN, "DEBUG"),
         INFO(GREEN, "INFO "),
+        FIXME(BRIGHT_YELLOW, "FIXME"),
         WARN(YELLOW, "WARN "),
         ERROR(RED, "ERROR"),
         FATAL(BRIGHT_RED + BOLD, "FATAL");
@@ -65,20 +66,20 @@ public record Logger(String className) {
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
-    private static final ConcurrentMap<String, Logger> loggerCache = new ConcurrentHashMap<>();
+    private static final ConcurrentMap<String, LoggingUtils> loggerCache = new ConcurrentHashMap<>();
 
     /**
      * Get a logger instance for the given class
      */
-    public static Logger getLogger(Class<?> clazz) {
+    public static LoggingUtils getLogger(Class<?> clazz) {
         return getLogger(clazz.getSimpleName());
     }
 
     /**
      * Get a logger instance for the given class name
      */
-    public static Logger getLogger(String className) {
-        return loggerCache.computeIfAbsent(className, Logger::new);
+    public static LoggingUtils getLogger(String className) {
+        return loggerCache.computeIfAbsent(className, LoggingUtils::new);
     }
 
     /**
@@ -100,6 +101,13 @@ public record Logger(String className) {
      */
     public void info(String message, Object... args) {
         log(Level.INFO, message, args);
+    }
+
+    /**
+     * Log a fix me message
+     */
+    public void fixme(String message, Object... args) {
+        log(Level.FIXME, message, args);
     }
 
     /**

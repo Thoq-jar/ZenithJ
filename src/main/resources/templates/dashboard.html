@@ -1,200 +1,329 @@
 <!DOCTYPE html>
-<html>
+<!--suppress CssUnresolvedCustomProperty, CssUnusedSymbol -->
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zenith Dashboard</title>
+    <script src="/chart.js"></script>
     <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1a1;
+            --text-muted: #666666;
+            --purple-primary: #8b5cf6;
+            --purple-secondary: #a855f7;
+            --purple-dark: #7c3aed;
+            --border-color: #333333;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+        }
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            color: #ffffff;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+        .layout {
+            display: flex;
             min-height: 100vh;
         }
-
-        .header {
-            background: rgba(138, 43, 226, 0.1);
-            border-bottom: 2px solid #8a2be2;
-            padding: 1rem 2rem;
-            backdrop-filter: blur(10px);
+        .sidebar {
+            width: 280px;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
         }
-
-        .header h1 {
-            color: #9370db;
-            font-size: 2.5rem;
-            text-shadow: 0 0 10px rgba(147, 112, 219, 0.5);
+        .sidebar h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
         }
-
-        .dashboard {
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
+        .settings-group {
+            margin-bottom: 2rem;
         }
-
-        .card {
-            background: rgba(138, 43, 226, 0.05);
-            border: 1px solid rgba(138, 43, 226, 0.3);
-            border-radius: 15px;
-            padding: 1.5rem;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(138, 43, 226, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(138, 43, 226, 0.2);
-            border-color: rgba(138, 43, 226, 0.5);
-        }
-
-        .card h3 {
-            color: #9370db;
+        .settings-group h3 {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
             margin-bottom: 1rem;
-            font-size: 1.5rem;
-            text-shadow: 0 0 5px rgba(147, 112, 219, 0.3);
         }
-
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+        .setting-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        .toggle {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .toggle.active {
+            background: var(--purple-primary);
+        }
+        .toggle::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--text-primary);
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s ease;
+        }
+        .toggle.active::after {
+            transform: translateX(20px);
+        }
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+        }
+        .header {
+            margin-bottom: 2rem;
+        }
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
         .metric {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1rem;
-            padding: 0.8rem;
-            background: rgba(138, 43, 226, 0.08);
-            border-radius: 8px;
-            border-left: 4px solid #8a2be2;
         }
-
         .metric-label {
-            font-weight: 500;
-            color: #ddd;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
         }
-
         .metric-value {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #ffffff;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
         }
-
         .progress-bar {
             width: 100%;
-            height: 8px;
-            background: rgba(138, 43, 226, 0.2);
-            border-radius: 4px;
-            margin-top: 0.5rem;
+            height: 6px;
+            background: var(--bg-tertiary);
+            border-radius: 3px;
+            margin-bottom: 1.5rem;
             overflow: hidden;
         }
-
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #8a2be2, #9370db);
-            border-radius: 4px;
+            background: var(--purple-primary);
+            border-radius: 3px;
             transition: width 0.5s ease;
-            box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
         }
-
-        .network-stats {
-            display: flex;
-            justify-content: space-around;
+        .network-chart {
+            height: 250px;
             margin-top: 1rem;
+            position: relative;
         }
-
+        .network-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
         .network-stat {
             text-align: center;
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
         }
-
         .network-stat .value {
             font-size: 1.5rem;
-            font-weight: bold;
-            color: #9370db;
-            text-shadow: 0 0 5px rgba(147, 112, 219, 0.5);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
         }
-
         .network-stat .label {
-            color: #ccc;
-            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 5px rgba(138, 43, 226, 0.3); }
-            50% { box-shadow: 0 0 20px rgba(138, 43, 226, 0.6); }
-            100% { box-shadow: 0 0 5px rgba(138, 43, 226, 0.3); }
-        }
-
-        .live-indicator {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            width: 12px;
-            height: 12px;
-            background: #00ff41;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        .card {
-            position: relative;
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-<div class="header">
-    <h1>Zenith Dashboard</h1>
-</div>
-
-<div class="dashboard">
-    <div class="card">
-        <div class="live-indicator"></div>
-        <h3>System Resources</h3>
-        <div class="metric">
-            <span class="metric-label">CPU Usage</span>
-            <span class="metric-value" id="cpu-value">0%</span>
-        </div>
-        <div class="progress-bar">
-            <div class="progress-fill" id="cpu-progress" style="width: 0%"></div>
-        </div>
-
-        <div class="metric">
-            <span class="metric-label">Memory Usage</span>
-            <span class="metric-value" id="memory-value">0%</span>
-        </div>
-        <div class="progress-bar">
-            <div class="progress-fill" id="memory-progress" style="width: 0%"></div>
-        </div>
-
-        <div class="metric">
-            <span class="metric-label">Disk Usage</span>
-            <span class="metric-value" id="disk-value">0 MB</span>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="live-indicator"></div>
-        <h3>Network Statistics</h3>
-        <div class="network-stats">
-            <div class="network-stat">
-                <div class="value" id="upload-value">0</div>
-                <div class="label">Upload (bytes)</div>
+<div class="layout">
+    <div class="sidebar">
+        <h2>Settings</h2>
+        <div class="settings-group">
+            <h3>Display</h3>
+            <div class="setting-item">
+                <span class="setting-label">Dark Mode</span>
+                <div class="toggle active" data-setting="darkMode"></div>
             </div>
-            <div class="network-stat">
-                <div class="value" id="download-value">0</div>
-                <div class="label">Download (bytes)</div>
+            <div class="setting-item">
+                <span class="setting-label">Auto Refresh</span>
+                <div class="toggle active" data-setting="autoRefresh"></div>
+            </div>
+            <div class="setting-item">
+                <span class="setting-label">Animations</span>
+                <div class="toggle active" data-setting="animations"></div>
             </div>
         </div>
+        <div class="settings-group">
+            <h3>Monitoring</h3>
+            <div class="setting-item">
+                <span class="setting-label">CPU Alerts</span>
+                <div class="toggle" data-setting="cpuAlerts"></div>
+            </div>
+            <div class="setting-item">
+                <span class="setting-label">Memory Alerts</span>
+                <div class="toggle" data-setting="memoryAlerts"></div>
+            </div>
+            <div class="setting-item">
+                <span class="setting-label">Network Monitoring</span>
+                <div class="toggle active" data-setting="networkMonitoring"></div>
+            </div>
+        </div>
+        <div class="settings-group">
+            <h3>Updates</h3>
+            <div class="setting-item">
+                <span class="setting-label">Real-time Updates</span>
+                <div class="toggle active" data-setting="realTimeUpdates"></div>
+            </div>
+            <div class="setting-item">
+                <span class="setting-label">Sound Notifications</span>
+                <div class="toggle" data-setting="soundNotifications"></div>
+            </div>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <h1>Zenith Monitoring Platform</h1>
+        </div>
+        <div class="dashboard">
+            <div class="card">
+                <div class="card-header">
+                    <h3>System Resources</h3>
+                    <div class="status-indicator"></div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">CPU Usage</span>
+                    <span class="metric-value" id="cpu-value">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="cpu-progress" style="width: 0"></div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Memory Usage</span>
+                    <span class="metric-value" id="memory-value">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="memory-progress" style="width: 0"></div>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Disk Usage</span>
+                    <span class="metric-value" id="disk-value">0 MB</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3>Network Statistics</h3>
+                    <div class="status-indicator"></div>
+                </div>
+                <div class="network-stats">
+                    <div class="network-stat">
+                        <div class="value" id="upload-value">0</div>
+                        <div class="label">Upload</div>
+                    </div>
+                    <div class="network-stat">
+                        <div class="value" id="download-value">0</div>
+                        <div class="label">Download</div>
+                    </div>
+                </div>
+                <div class="network-chart">
+                    <canvas id="networkChart"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
 <script>
+    let networkChart;
+    const maxDataPoints = 20;
+    const chartLabels = [];
+    const uploadData = [];
+    const downloadData = [];
+
     function formatBytes(bytes) {
         if (bytes === 0) return '0 B';
         const k = 1024;
@@ -203,24 +332,119 @@
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
 
+    function initChart() {
+        const ctx = document.getElementById('networkChart').getContext('2d');
+        networkChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: chartLabels,
+                datasets: [{
+                    label: 'Upload',
+                    data: uploadData,
+                    borderColor: '#8b5cf6',
+                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true
+                }, {
+                    label: 'Download',
+                    data: downloadData,
+                    borderColor: '#a855f7',
+                    backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#a1a1a1',
+                            font: {
+                                size: 12
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        display: false,
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        grid: {
+                            color: '#333333'
+                        },
+                        ticks: {
+                            color: '#a1a1a1',
+                            callback: function(value) {
+                                return formatBytes(value);
+                            }
+                        }
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                },
+                elements: {
+                    point: {
+                        radius: 0,
+                        hoverRadius: 4
+                    }
+                }
+            }
+        });
+    }
+
+    function updateChart(upload, download) {
+        const now = new Date().toLocaleTimeString();
+
+        chartLabels.push(now);
+        uploadData.push(upload);
+        downloadData.push(download);
+
+        if (chartLabels.length > maxDataPoints) {
+            chartLabels.shift();
+            uploadData.shift();
+            downloadData.shift();
+        }
+
+        networkChart.update('none');
+    }
+
     function updateMetrics() {
         fetch('/api/metrics')
             .then(response => response.json())
             .then(data => {
                 document.getElementById('cpu-value').textContent = data.cpu?.toFixed(1) + '%' || '0%';
                 document.getElementById('cpu-progress').style.width = (data.cpu || 0) + '%';
-
                 document.getElementById('memory-value').textContent = data.memory?.toFixed(1) + '%' || '0%';
                 document.getElementById('memory-progress').style.width = (data.memory || 0) + '%';
-
                 document.getElementById('disk-value').textContent = formatBytes(data.disk * 1024 * 1024 || 0);
-
-                document.getElementById('upload-value').textContent = formatBytes(data.up || 0);
-                document.getElementById('download-value').textContent = formatBytes(data.down || 0);
+                const uploadFormatted = formatBytes(data.up || 0);
+                const downloadFormatted = formatBytes(data.down || 0);
+                document.getElementById('upload-value').textContent = uploadFormatted;
+                document.getElementById('download-value').textContent = downloadFormatted;
+                updateChart(data.up || 0, data.down || 0);
             })
-            .catch(error => console.error('Error fetching metrics:', error));
+            .catch(error => {
+                console.error('Error fetching metrics:', error);
+            });
     }
 
+    document.querySelectorAll('.toggle').forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('active');
+        });
+    });
+
+    initChart();
     updateMetrics();
     setInterval(updateMetrics, 1000);
 </script>

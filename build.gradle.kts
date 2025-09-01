@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("io.quarkus") version "3.2.9.Final"
 }
 
 group = "dev.thoq.zenith"
@@ -9,12 +10,25 @@ repositories {
     mavenCentral()
 }
 
+val quarkusVersion = "3.2.9.Final"
+
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    implementation(platform("io.quarkus.platform:quarkus-bom:${quarkusVersion}"))
+    implementation("io.quarkus:quarkus-resteasy-reactive")
+    implementation("io.quarkus:quarkus-qute")
+    implementation("io.quarkus:quarkus-resteasy-reactive-jackson")
+    implementation("io.quarkus:quarkus-scheduler")
+    implementation("io.quarkus:quarkus-arc")
+
+    testImplementation("io.quarkus:quarkus-junit5")
+    testImplementation("io.rest-assured:rest-assured")
 }
 
-tasks.test {
-    useJUnitPlatform()
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+tasks.withType<Test> {
+    systemProperty("java.util.logging.manager", "org.jboss.logmanager.LogManager")
 }

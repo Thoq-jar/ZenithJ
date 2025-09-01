@@ -4,7 +4,36 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="28bacedc-a095-4345-af21-bc764e4953ca" name="Changes" comment="" />
+    <list default="true" id="28bacedc-a095-4345-af21-bc764e4953ca" name="Changes" comment="cleanup">
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/collector/MetricsCollector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/collector/MetricsCollector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/collector/NetworkStatsCollector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/collector/NetworkStatsCollector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/collector/ProcessStatsCollector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/collector/ProcessStatsCollector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/controller/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/controller/DashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/controller/DashboardRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/controller/DashboardRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/model/enums/AlertSeverity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/model/enums/AlertSeverity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/model/enums/MetricType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/model/enums/MetricType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/model/enums/SystemStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/model/enums/SystemStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/processor/DataProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/processor/DataProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/processor/MetricsAggregator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/processor/MetricsAggregator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/processor/RealTimeProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/processor/RealTimeProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/service/analytics/AnomalyDetectionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/service/analytics/AnomalyDetectionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/service/analytics/ReportGenerationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/service/analytics/ReportGenerationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/service/analytics/TrendAnalysisService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/service/analytics/TrendAnalysisService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/service/monitoring/NetworkMonitorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/service/monitoring/NetworkMonitorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/service/monitoring/ProcessMonitorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/service/monitoring/ProcessMonitorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/service/monitoring/ResourceMonitorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/service/monitoring/ResourceMonitorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/util/LoggingUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dev/thoq/zenith/util/LoggingUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/chat.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/dashboard.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,12 +42,42 @@
   <component name="ComposerSettings">
     <execution />
   </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Thoq-jar"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Thoq-jar/ZenithJ.git",
+    "accountId": "084fac9c-1ced-4c35-abb0-5eebdcd2b86c"
+  }
+}]]></component>
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="true" />
   </component>
+  <component name="GradleScriptDefinitionsStorage" workingDir="$PROJECT_DIR$" gradleHome="$USER_HOME$/.gradle/wrapper/dists/gradle-8.14-bin/38aieal9i53h9rfe7vjup95b9/gradle-8.14" javaHome="$USER_HOME$/Library/Java/JavaVirtualMachines/graalvm-jdk-24.0.2/Contents/Home" gradleVersion="8.14" />
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="tHxFFOSs" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="$USER_HOME$/.config/herd-lite/bin/php" />
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
   </component>
@@ -26,19 +85,33 @@
   "associatedIndex": 7
 }]]></component>
   <component name="ProjectId" id="324c6Xk2eWM21uSybazmRju5q8j" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Gradle.zenith [:dev.thoq.zenith.Main.main()].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "main",
     "go.import.settings.migrated": "true",
     "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "/Users/tristanshaw/Projects/zenith/src/main/java/dev/thoq/zenith/Main.java",
     "org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon": "",
     "project.structure.last.edited": "SDKs",
@@ -50,6 +123,51 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/templates" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Zenith">
+    <configuration name="Zenith" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="dev.thoq.zenith.Main" />
+      <module name="zenith.main" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/env" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="zenith.main" type="QuarkusRunConfigurationType" factoryName="Quarkus" nameIsGenerated="true">
+      <module name="zenith.main" />
+      <QsGradleRunConfiguration>
+        <ExternalSystemSettings>
+          <option name="executionName" />
+          <option name="externalProjectPath" value="$PROJECT_DIR$" />
+          <option name="externalSystemIdString" value="GRADLE" />
+          <option name="scriptParameters" />
+          <option name="taskDescriptions">
+            <list />
+          </option>
+          <option name="taskNames">
+            <list />
+          </option>
+          <option name="vmOptions" />
+        </ExternalSystemSettings>
+        <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+        <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+        <DebugAllEnabled>false</DebugAllEnabled>
+        <RunAsTest>false</RunAsTest>
+        <profile>dev</profile>
+      </QsGradleRunConfiguration>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Zenith" />
+      <item itemvalue="Quarkus.zenith.main" />
+    </list>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="28bacedc-a095-4345-af21-bc764e4953ca" name="Changes" comment="" />
@@ -57,23 +175,19 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756683112468</updated>
-      <workItem from="1756683113274" duration="7000" />
+      <workItem from="1756683113274" duration="12139000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleanup" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>
     <settings-migrated>true</settings-migrated>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/dev/thoq/zenith/Main.java</url>
-          <line>13</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

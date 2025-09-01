@@ -1,17 +1,58 @@
 package dev.thoq.zenith;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+import dev.thoq.zenith.collector.MetricsCollector;
+import dev.thoq.zenith.collector.NetworkStatsCollector;
+import dev.thoq.zenith.collector.ProcessStatsCollector;
+import dev.thoq.zenith.processor.RealTimeProcessor;
+import dev.thoq.zenith.util.LoggingUtils;
+import io.quarkus.runtime.Quarkus;
+import io.quarkus.runtime.QuarkusApplication;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+public class Main implements QuarkusApplication {
+    private static final LoggingUtils logger = LoggingUtils.getLogger(Main.class);
+    private static final MetricsCollector metricsCollector = new MetricsCollector();
+    private static final NetworkStatsCollector networkStatsCollector = new NetworkStatsCollector();
+    private static final ProcessStatsCollector processStatsCollector = new ProcessStatsCollector();
+    private static final RealTimeProcessor realtimeProcessor = new RealTimeProcessor();
+
+    public static void initialize() {
+        metricsCollector.runUpdateMetrics();
+        networkStatsCollector.runUpdateNetworkStats();
+        processStatsCollector.runUpdateProcessStats();
+        realtimeProcessor.runUpdateProcessStats();
+    }
+
+    public static void shutdown() {
+        metricsCollector.stopUpdateMetrics();
+        networkStatsCollector.stopUpdateNetworkStats();
+        processStatsCollector.stopUpdateProcessStats();
+        realtimeProcessor.stopUpdateProcessStats();
+    }
+
+    public static void main(String[] args) {
+        Thread.currentThread().setName("Zenith-Bootstrap");
+        logger.info("Starting Zenith with Quarkus...");
+        Quarkus.run(Main.class, args);
+    }
+
+    @Override
+    public int run(String... args) {
+        Thread.currentThread().setName("Zenith-Bootstrap");
+
+        logger.info("Booting Zenith...");
+        initialize();
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            Thread.currentThread().setName("Zenith-ShutdownHook");
+            logger.info("Shutting down Zenith...");
+
+            shutdown();
+        }));
+
+        logger.info("Zenith booted successfully!");
+        logger.info("Dashboard available at: http://localhost:9595");
+
+        Quarkus.waitForExit();
+        return 0;
     }
 }

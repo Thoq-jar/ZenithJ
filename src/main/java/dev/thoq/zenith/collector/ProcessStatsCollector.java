@@ -1,7 +1,7 @@
 package dev.thoq.zenith.collector;
 
 import dev.thoq.zenith.service.monitoring.ProcessMonitorService;
-import dev.thoq.zenith.util.Logger;
+import dev.thoq.zenith.util.LoggingUtils;
 
 import java.util.Collection;
 import java.util.List;
@@ -10,11 +10,12 @@ import java.util.Map;
 @SuppressWarnings("BusyWait")
 public class ProcessStatsCollector {
     private final ProcessMonitorService processMonitorService;
-    private final Logger logger = Logger.getLogger(ProcessStatsCollector.class);
+    private final LoggingUtils logger;
     private volatile boolean running = false;
     private Thread processStatsThread;
 
     public ProcessStatsCollector() {
+        this.logger = LoggingUtils.getLogger(ProcessStatsCollector.class);
         this.processMonitorService = new ProcessMonitorService();
     }
 
@@ -32,6 +33,7 @@ public class ProcessStatsCollector {
 
             while(running) {
                 processMonitorService.updateData();
+
                 try {
                     Thread.sleep(1000);
                 } catch(InterruptedException ex) {
