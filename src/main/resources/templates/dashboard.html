@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(138, 43, 226, 0.1);
+            border-bottom: 2px solid #8a2be2;
+            padding: 1rem 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            color: #9370db;
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px rgba(147, 112, 219, 0.5);
+        }
+
+        .dashboard {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: rgba(138, 43, 226, 0.05);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(138, 43, 226, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(138, 43, 226, 0.2);
+            border-color: rgba(138, 43, 226, 0.5);
+        }
+
+        .card h3 {
+            color: #9370db;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            text-shadow: 0 0 5px rgba(147, 112, 219, 0.3);
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            background: rgba(138, 43, 226, 0.08);
+            border-radius: 8px;
+            border-left: 4px solid #8a2be2;
+        }
+
+        .metric-label {
+            font-weight: 500;
+            color: #ddd;
+        }
+
+        .metric-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(138, 43, 226, 0.2);
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8a2be2, #9370db);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+        }
+
+        .network-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 1rem;
+        }
+
+        .network-stat {
+            text-align: center;
+        }
+
+        .network-stat .value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #9370db;
+            text-shadow: 0 0 5px rgba(147, 112, 219, 0.5);
+        }
+
+        .network-stat .label {
+            color: #ccc;
+            margin-top: 0.5rem;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 5px rgba(138, 43, 226, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(138, 43, 226, 0.6); }
+            100% { box-shadow: 0 0 5px rgba(138, 43, 226, 0.3); }
+        }
+
+        .live-indicator {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 12px;
+            height: 12px;
+            background: #00ff41;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .card {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>Zenith Dashboard</h1>
+</div>
+
+<div class="dashboard">
+    <div class="card">
+        <div class="live-indicator"></div>
+        <h3>System Resources</h3>
+        <div class="metric">
+            <span class="metric-label">CPU Usage</span>
+            <span class="metric-value" id="cpu-value">0%</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="cpu-progress" style="width: 0%"></div>
+        </div>
+
+        <div class="metric">
+            <span class="metric-label">Memory Usage</span>
+            <span class="metric-value" id="memory-value">0%</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="memory-progress" style="width: 0%"></div>
+        </div>
+
+        <div class="metric">
+            <span class="metric-label">Disk Usage</span>
+            <span class="metric-value" id="disk-value">0 MB</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="live-indicator"></div>
+        <h3>Network Statistics</h3>
+        <div class="network-stats">
+            <div class="network-stat">
+                <div class="value" id="upload-value">0</div>
+                <div class="label">Upload (bytes)</div>
+            </div>
+            <div class="network-stat">
+                <div class="value" id="download-value">0</div>
+                <div class="label">Download (bytes)</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function formatBytes(bytes) {
+        if (bytes === 0) return '0 B';
+        const k = 1024;
+        const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    function updateMetrics() {
+        fetch('/api/metrics')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('cpu-value').textContent = data.cpu?.toFixed(1) + '%' || '0%';
+                document.getElementById('cpu-progress').style.width = (data.cpu || 0) + '%';
+
+                document.getElementById('memory-value').textContent = data.memory?.toFixed(1) + '%' || '0%';
+                document.getElementById('memory-progress').style.width = (data.memory || 0) + '%';
+
+                document.getElementById('disk-value').textContent = formatBytes(data.disk * 1024 * 1024 || 0);
+
+                document.getElementById('upload-value').textContent = formatBytes(data.up || 0);
+                document.getElementById('download-value').textContent = formatBytes(data.down || 0);
+            })
+            .catch(error => console.error('Error fetching metrics:', error));
+    }
+
+    updateMetrics();
+    setInterval(updateMetrics, 1000);
+</script>
+</body>
+</html>
