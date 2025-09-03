@@ -31,7 +31,7 @@ public class Main implements QuarkusApplication {
 
     public static void main(String[] args) {
         Thread.currentThread().setName("Zenith-Bootstrap");
-        logger.info("Starting Zenith with Quarkus...");
+        logger.info("Starting Zenith...");
         Quarkus.run(Main.class, args);
     }
 

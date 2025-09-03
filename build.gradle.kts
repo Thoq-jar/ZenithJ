@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id("io.quarkus") version "3.2.9.Final"
+    id("application")
 }
 
 group = "dev.thoq.zenith"
@@ -19,9 +20,12 @@ dependencies {
     implementation("io.quarkus:quarkus-resteasy-reactive-jackson")
     implementation("io.quarkus:quarkus-scheduler")
     implementation("io.quarkus:quarkus-arc")
-
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
+}
+
+application {
+    mainClass.set("dev.thoq.zenith.Main")
 }
 
 java {
@@ -31,4 +35,12 @@ java {
 
 tasks.withType<Test> {
     systemProperty("java.util.logging.manager", "org.jboss.logmanager.LogManager")
+}
+
+tasks.named<JavaExec>("run") {
+    dependsOn("classes")
+    classpath = sourceSets.main.get().runtimeClasspath
+    jvmArgs = listOf(
+        "-Djava.util.logging.manager=org.jboss.logmanager.LogManager"
+    )
 }
