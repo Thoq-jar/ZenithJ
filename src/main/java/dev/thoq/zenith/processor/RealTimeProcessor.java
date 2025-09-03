@@ -1,8 +1,7 @@
 package dev.thoq.zenith.processor;
 
+import dev.thoq.zenith.model.types.MonitorData;
 import dev.thoq.zenith.util.LoggingUtils;
-
-import java.util.Map;
 
 public class RealTimeProcessor {
     private final LoggingUtils logger;
@@ -31,7 +30,7 @@ public class RealTimeProcessor {
 
             while(running) {
                 metricsAggregator.aggregate();
-                Map<String, Map<String, Double>> data = metricsAggregator.getAggregatedData();
+                MonitorData data = metricsAggregator.getAggregatedData();
 
                 dataProcessor.process(data);
             }

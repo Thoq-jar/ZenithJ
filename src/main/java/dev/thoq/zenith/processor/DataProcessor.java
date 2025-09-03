@@ -1,16 +1,16 @@
 package dev.thoq.zenith.processor;
 
+import dev.thoq.zenith.model.types.Anomalies;
+import dev.thoq.zenith.model.types.MonitorData;
+import dev.thoq.zenith.model.types.Timestamps;
+import dev.thoq.zenith.model.types.impl.TimestampsImpl;
 import dev.thoq.zenith.service.analytics.AnomalyDetectionService;
 import dev.thoq.zenith.service.analytics.ReportGenerationService;
 import dev.thoq.zenith.service.analytics.TrendAnalysisService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 public class DataProcessor {
     private float lastTimestamp;
-    private final List<Float> timestamps;
+    private final Timestamps timestamps = new TimestampsImpl();
     private final AnomalyDetectionService anomalyDetectionService;
     private final ReportGenerationService reportGenerationService;
     private final TrendAnalysisService trendAnalysisService;
@@ -19,14 +19,13 @@ public class DataProcessor {
         this.anomalyDetectionService = new AnomalyDetectionService();
         this.reportGenerationService = new ReportGenerationService();
         this.trendAnalysisService = new TrendAnalysisService();
-        this.timestamps = new ArrayList<>();
     }
 
-    public void process(Map<String, Map<String, Double>> data) {
+    public void process(MonitorData data) {
         this.lastTimestamp = System.currentTimeMillis() / 1000.0f;
         this.timestamps.add(getLastTimestamp());
 
-        List<Map<String, String>> anomalies = anomalyDetectionService.detectAnomalies(timestamps, data);
+        Anomalies anomalies = anomalyDetectionService.detectAnomalies(timestamps, data);
         reportGenerationService.generateReport(anomalies, data);
         trendAnalysisService.analyzeTrends(data);
     }

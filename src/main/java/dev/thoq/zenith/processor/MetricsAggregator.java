@@ -1,12 +1,14 @@
 package dev.thoq.zenith.processor;
 
+import dev.thoq.zenith.model.types.MonitorData;
+import dev.thoq.zenith.model.types.impl.MonitorDataImpl;
 import dev.thoq.zenith.service.monitoring.NetworkMonitorService;
 import dev.thoq.zenith.service.monitoring.ResourceMonitorService;
 
 import java.util.Map;
 
 public class MetricsAggregator {
-    private Map<String, Map<String, Double>> data;
+    private MonitorData data;
     private final ResourceMonitorService resourceMonitorService;
     private final NetworkMonitorService networkMonitorService;
 
@@ -15,7 +17,7 @@ public class MetricsAggregator {
         this.networkMonitorService = new NetworkMonitorService();
     }
 
-    public Map<String, Map<String, Double>> getAggregatedData() {
+    public MonitorData getAggregatedData() {
         return data;
     }
 
@@ -28,11 +30,13 @@ public class MetricsAggregator {
                 "download", (double) networkMonitorService.getDataDown()
         );
 
-        this.data = Map.of(
+        Map<String, Map<String, Double>> aggregatedData = Map.of(
                 "cpu", cpu,
                 "memory", memory,
                 "disk", disk,
                 "network", network
         );
+
+        this.data = new MonitorDataImpl(aggregatedData);
     }
 }
